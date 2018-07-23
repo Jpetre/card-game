@@ -1,0 +1,10 @@
+.fightZone {
+  width: 100%;
+  height: 50%; }
+  .fightZone_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    border: 1px dashed #ccc; }
+    .fightZone_container > div {
+      width: 15%; }

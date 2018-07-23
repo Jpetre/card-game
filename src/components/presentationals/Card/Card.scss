@@ -1,0 +1,59 @@
+.card {
+  width: auto;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  box-shadow: 0px 5px 20px #555;
+  cursor: pointer;
+
+  &_picture {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    border-bottom: 1px solid #444;
+    margin: 0;
+
+    img {
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+    }
+  }
+
+  &_stats {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    height: 40%;
+    align-self: flex-end;
+
+    li {
+      width: 35%;
+    }
+  }
+
+  &_body {
+    position: relative;
+    height: 50%;
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &_cost {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  &_name {
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+}

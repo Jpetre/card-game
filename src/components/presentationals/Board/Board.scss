@@ -1,0 +1,33 @@
+.board {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+
+  &_lane {
+    background-color: #999966;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+
+    &:first-child {
+      border-right: 1px solid #ccc;
+    }
+
+    &:last-child {
+      border-left: 1px solid #ccc;
+    }
+
+    &_player {
+      width: 100%;
+      height: 25%;
+    }
+
+    &_battleField {
+      width: 100%;
+      height: 50%;
+    }
+  }
+}

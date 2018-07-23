@@ -1,0 +1,22 @@
+.board {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden; }
+  .board_lane {
+    background-color: #999966;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between; }
+    .board_lane:first-child {
+      border-right: 1px solid #ccc; }
+    .board_lane:last-child {
+      border-left: 1px solid #ccc; }
+    .board_lane_player {
+      width: 100%;
+      height: 25%; }
+    .board_lane_battleField {
+      width: 100%;
+      height: 50%; }

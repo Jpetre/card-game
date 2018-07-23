@@ -1,0 +1,9 @@
+.hand {
+  width: 100%;
+  height: 100%; }
+  .hand_container {
+    height: 100%;
+    width: 100%;
+    display: flex; }
+    .hand_container > div {
+      width: 15%; }
