@@ -4,19 +4,10 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import Hand from '../Hand/Hand.jsx';
 import FightZone from '../FightZone/FightZone.jsx';
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 /**
  * Moves an item from one list to another list.
  */
 const move = (source, destination, droppableSource, droppableDestination) => {
-  console.log('move', source, destination, droppableSource, droppableDestination);
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
   const [removed] = sourceClone.splice(droppableSource.index, 1);
@@ -43,7 +34,7 @@ class Board extends Component {
       playerFourFz: [],
       turnPlayer: this.props.hands[0].player,
       turnPlayerId: 0,
-      turnNumber: 1
+      turnNumber: this.props.turn,
     };
 
     this.areas = {
@@ -121,31 +112,38 @@ class Board extends Component {
     const { turnNumber, turnPlayerId } = this.state;
 
     let nextTurnPlayerId = 0;
-    for(let i = 0; i < this.orderTurns.length - 1; i++) {
-      console.log('i', i, this.orderTurns.length - 1);
-      if (i ===this.orderTurns[turnPlayerId]) {
+    let nextTurnNumber = turnNumber;
+    for(let i = 0; i < this.orderTurns.length; i++) {
+      if (i === this.orderTurns[turnPlayerId]) {
         if(i === this.orderTurns.length - 1) {
           nextTurnPlayerId = this.orderTurns[0];
+          nextTurnNumber = turnNumber + 1;
           break;
         }
         nextTurnPlayerId = this.orderTurns[i+1];
         break;
       }
     }
-    console.log('halo');
+
     this.setState({
-      turnNumber: turnNumber + 1,
+      turnNumber: nextTurnNumber,
       turnPlayerId: nextTurnPlayerId,
       turnPlayer: this.props.hands[nextTurnPlayerId].player
     });
+
+    this.props.endTurn(nextTurnNumber);
   }
 
   render() {
     const {
       playerOneHand, playerTwoHand, playerThreeHand, playerFourHand,
       playerOneFz, playerTwoFz, playerThreeFz, playerFourFz,
-      turnPlayer
+      turnPlayer, turnNumber
     } = this.state;
+
+    const {
+      manaPool
+    } = this.props;
 
     return (
       <section className="board">
@@ -157,6 +155,7 @@ class Board extends Component {
                 player={this.props.hands[0].player}
                 droppableId='playerOneHand'
                 isDragDisabled={turnPlayer !== this.props.hands[0].player}
+                manaPool={manaPool[0]}
               />
             </div>
             <div className="board_lane_battleField">
@@ -179,13 +178,14 @@ class Board extends Component {
                 player={this.props.hands[2].player}
                 droppableId='playerThreeHand'
                 isDragDisabled={turnPlayer !== this.props.hands[2].player}
+                manaPool={manaPool[2]}
               />
             </div>
           </div>
           <button
             className="board_nextTurn"
             onClick={() => this.nextTurn()}
-          > done </button>
+          > done / T{turnNumber} </button>
           <div className="board_lane">   
             <div className="board_lane_player">
               <Hand
@@ -193,6 +193,7 @@ class Board extends Component {
                 player={this.props.hands[1].player}
                 droppableId='playerTwoHand'
                 isDragDisabled={turnPlayer !== this.props.hands[1].player}
+                manaPool={manaPool[1]}
               />
             </div>
             <div className="board_lane_battleField">
@@ -215,6 +216,7 @@ class Board extends Component {
                 player={this.props.hands[3].player}
                 droppableId='playerFourHand'
                 isDragDisabled={turnPlayer !== this.props.hands[3].player}
+                manaPool={manaPool[3]}
               />
             </div>
           </div>
@@ -225,7 +227,10 @@ class Board extends Component {
 }
 
 Board.propTypes = {
-  hands: PropTypes.array    
+  hands: PropTypes.array,
+  turn: PropTypes.number,
+  manaPool: PropTypes.array,
+  endTurn: PropTypes.func
 }
 
 export default Board;

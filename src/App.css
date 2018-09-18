@@ -73,6 +73,8 @@ ul, p, a, li, span, h1, h2, h3, button, div, figure, img {
     text-align: center;
     margin-bottom: 20px;
     width: 100%; }
+  .card.isPlayable {
+    border: 2px solid green; }
 
 .board {
   width: 100%;

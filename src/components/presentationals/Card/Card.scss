@@ -56,4 +56,8 @@
     margin-bottom: 20px;
     width: 100%;
   }
+
+  &.isPlayable {
+    border: 2px solid green;
+  }
 }
