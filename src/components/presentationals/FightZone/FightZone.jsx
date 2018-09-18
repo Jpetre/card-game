@@ -35,9 +35,7 @@ class FightZone extends Component {
                         <Card 
                           name={card.name}
                           pictureSrc={card.pictureSrc}
-                          atkDistance={card.atkDistance}
-                          armor={card.armor}
-                          atkMelee={card.atkMelee}
+                          atk={card.atk}
                           pv={card.pv}
                           cost={card.cost}
                         />

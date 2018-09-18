@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
-import Board from './components/presentationals/Board/Board.jsx';
+import BoardContainer from './components/containers/BoardContainer';
 import './App.css';
 
 const hands = [
@@ -10,19 +11,15 @@ const hands = [
       {
         name: "Lord Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
-        cost:3,
+        cost:1,
         playerId: 'Billy'
       },
       {
         name: "Seigneur Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'Billy'
@@ -30,11 +27,9 @@ const hands = [
       {
         name: "Big Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
-        cost:3,
+        cost:2,
         playerId: 'Billy'
       }
     ]
@@ -45,9 +40,7 @@ const hands = [
       {
         name: "Lord Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'John'
@@ -55,19 +48,15 @@ const hands = [
       {
         name: "Seigneur Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
-        cost:3,
+        cost:1,
         playerId: 'John'
       },
       {
         name: "Little Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'John'
@@ -80,19 +69,15 @@ const hands = [
       {
         name: "Lord Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
-        cost:3,
+        cost:1,
         playerId: 'Jack',
       },
       {
         name: "Seigneur Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'Jack'
@@ -100,9 +85,7 @@ const hands = [
       {
         name: "Big Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'Jack'
@@ -110,9 +93,7 @@ const hands = [
       {
         name: "Little Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'Jack'
@@ -125,9 +106,7 @@ const hands = [
       {
         name: "Lord Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:2,
         pv:5,
         cost:3,
         playerId: 'Bob'
@@ -135,9 +114,7 @@ const hands = [
       {
         name: "Seigneur Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'Bob'
@@ -145,9 +122,7 @@ const hands = [
       {
         name: "Big Billy",
         pictureSrc: "./dragon.jpg",
-        atkDistance:4,
-        atkMelee:2,
-        armor:0,
+        atk:4,
         pv:5,
         cost:3,
         playerId: 'Bob'
@@ -160,7 +135,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Board 
+        <BoardContainer 
           hands={hands}
         />
       </div>
@@ -168,4 +143,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App);

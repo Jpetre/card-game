@@ -8,8 +8,11 @@ class Hand extends Component {
     const {
       cards,
       droppableId,
-      isDragDisabled
+      isDragDisabled,
+      manaPool
     } = this.props;
+
+    console.log('manaPool', manaPool);
     return (
       <div className="hand">
         <Droppable droppableId={droppableId} direction="horizontal">
@@ -24,7 +27,7 @@ class Hand extends Component {
                     key={`card_hand_${this.props.player}_${index}`}
                     draggableId={`card_hand_${this.props.player}_${index}`}
                     index={index}
-                    isDragDisabled={isDragDisabled}
+                    isDragDisabled={isDragDisabled || card.cost > manaPool}
                   >
                     {(provided, snapshot) => (
                       <div
@@ -35,11 +38,10 @@ class Hand extends Component {
                         <Card 
                           name={card.name}
                           pictureSrc={card.pictureSrc}
-                          atkDistance={card.atkDistance}
-                          armor={card.armor}
-                          atkMelee={card.atkMelee}
+                          atk={card.atk}
                           pv={card.pv}
                           cost={card.cost}
+                          isPlayable={!isDragDisabled && card.cost <= manaPool}
                         />
                       </div>
                     )}
@@ -58,7 +60,8 @@ Hand.propTypes = {
   cards: PropTypes.array,
   player: PropTypes.string,
   droppableId: PropTypes.string,
-  isDragDisabled: PropTypes.bool
+  isDragDisabled: PropTypes.bool,
+  manaPool: PropTypes.number
 }
 
 export default Hand;
