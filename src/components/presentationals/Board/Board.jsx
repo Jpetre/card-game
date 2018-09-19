@@ -23,19 +23,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 class Board extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      playerOneHand: this.props.hands[0].cards,
-      playerTwoHand: this.props.hands[1].cards,
-      playerThreeHand: this.props.hands[2].cards,
-      playerFourHand: this.props.hands[3].cards,
-      playerOneFz: [],
-      playerTwoFz: [],
-      playerThreeFz: [],
-      playerFourFz: [],
-      turnPlayer: this.props.hands[0].player,
-      turnPlayerId: 0,
-      turnNumber: this.props.turn,
-    };
 
     this.areas = {
       playerOneHand: 'playerOneHand',
@@ -53,7 +40,7 @@ class Board extends Component {
     ];
   }
 
-  getList = id => this.state[this.areas[id]];
+  getList = id => this.props[this.areas[id]];
 
   getResult = (source, destination) =>
     move(
@@ -66,6 +53,10 @@ class Board extends Component {
   onDragEnd = result => {
     console.log('dragEnd', result);
     const { source, destination } = result;
+    const {
+      playerOneFz, playerTwoFz, playerThreeFz, playerFourFz,
+      playerOneHand, playerTwoHand, playerThreeHand, playerFourHand
+    } = this.props;
 
     // dropped outside the list
     if (!destination) {
@@ -102,14 +93,17 @@ class Board extends Component {
         return;
     }
 
-    this.setState({
-        ...this.state,
-        ...resolve
-    });
+    const payload = {
+      playerOneHand, playerTwoHand, playerThreeHand, playerFourHand,
+      playerOneFz, playerTwoFz, playerThreeFz, playerFourFz,
+      ...resolve
+    }
+    console.log('payload', payload);
+    this.props.dragEndSuccess(payload);
   };
 
   nextTurn = () => {
-    const { turnNumber, turnPlayerId } = this.state;
+    const { turnNumber, turnPlayerId } = this.props;
 
     let nextTurnPlayerId = 0;
     let nextTurnNumber = turnNumber;
@@ -125,24 +119,18 @@ class Board extends Component {
       }
     }
 
-    this.setState({
-      turnNumber: nextTurnNumber,
-      turnPlayerId: nextTurnPlayerId,
-      turnPlayer: this.props.hands[nextTurnPlayerId].player
-    });
-
-    this.props.endTurn(nextTurnNumber);
+    const payload = {
+      nextTurnNumber,
+      nextTurnPlayerId
+    }
+    this.props.endTurn(payload);
   }
 
   render() {
     const {
+      manaPool, turnNumber, turnPlayer,
       playerOneHand, playerTwoHand, playerThreeHand, playerFourHand,
-      playerOneFz, playerTwoFz, playerThreeFz, playerFourFz,
-      turnPlayer, turnNumber
-    } = this.state;
-
-    const {
-      manaPool
+      playerOneFz, playerTwoFz, playerThreeFz, playerFourFz
     } = this.props;
 
     return (
@@ -228,9 +216,20 @@ class Board extends Component {
 
 Board.propTypes = {
   hands: PropTypes.array,
-  turn: PropTypes.number,
+  turnNumber: PropTypes.number,
+  turnPlayerId: PropTypes.number,
+  turnPlayer: PropTypes.string,
   manaPool: PropTypes.array,
-  endTurn: PropTypes.func
+  playerOneHand: PropTypes.array,
+  playerTwoHand: PropTypes.array,
+  playerThreeHand: PropTypes.array,
+  playerFourHand: PropTypes.array,
+  playerOneFz: PropTypes.array,
+  playerTwoFz: PropTypes.array,
+  playerThreeFz: PropTypes.array,
+  playerFourFz: PropTypes.array,
+  endTurn: PropTypes.func,
+  dragEndSuccess: PropTypes.func
 }
 
 export default Board;
